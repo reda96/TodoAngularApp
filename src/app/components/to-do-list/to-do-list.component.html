@@ -1,0 +1,19 @@
+
+<div style="padding: 5px;">
+    <div class="filterPart">
+    <div >
+        <p-tabMenu  [model]="categories"  [activeItem]="activeItem" #menuItems (click)="filter()" >
+        </p-tabMenu> 
+    </div>
+    <div class="filterPart2">
+    <p style="margin-right:5px">show completed      </p>
+    <p-checkbox  [(ngModel)]="completedFilter" (onChange)="filter()"  [binary]="true" ></p-checkbox>
+</div>
+</div>
+<div class="container" *ngFor="let item of filteredList;let i=index" >
+    <div style="display: flex;"><p-checkbox [(ngModel)]="item.completed" inputId="i" (onChange)="markAsCompleted(item.completed,+c.inputId)"  [binary]="true" #c></p-checkbox>
+    <p  [ngStyle]="{'text-decoration': item.completed? 'line-through': 'none'}">{{item.title}}</p>
+</div> <button (click)="onRemoveItem(i, item)"  pButton type="button" class="p-button-danger p-button-text p-button-rounded" icon="pi pi-times" iconPos="right"></button>
+
+</div>
+</div>

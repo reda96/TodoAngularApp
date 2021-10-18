@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    
+}
+.container p{
+  margin-left: 1rem;
+}
+.filterPart {
+    display: flex;
+    background-color:lightgray;
+     justify-content: space-between;
+    width: 100%;
+}
+.filterPart p {
+    line-height: 3;
+    font-size: x-small;
+}
+.filterPart2 {
+    display: flex;
+ justify-content: space-between;
+}
+/* .p-tabmenu .p-tabmenu-nav {
+    background-color: lightgray;
+  } */
+  
