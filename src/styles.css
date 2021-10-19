@@ -1,6 +1,84 @@
 /* You can add global styles to this file, and also import other style files */
-body{ 
-    display: flex;
-    background-color: lightgray;
-    justify-content: center;
+body {
+  display: flex;
+  background-color: lightgray;
+  justify-content: center;
+}
+.p-inputtext {
+  border-radius: 0 !important;
+  border-top-style: none !important;
+  border-right-style: solid;
+  border-bottom-style: none !important;
+  border-left-style: none !important;
+  font-weight: bold;
+  width: 55%;
+  height: 30px;
+}
+
+.p-inputtext:focus,
+.p-inputtext:hover {
+  outline: none;
+  box-shadow: none !important;
+  border-color: #ced4da !important;
+}
+
+#addButton {
+  background-color: rgb(83, 194, 83);
+  color: black;
+  font-weight: bold;
+  border: none;
+  padding: 3px;
+  width: 15%;
+}
+
+.p-dropdown {
+  background-color: rgba(223, 217, 217, 0.705) !important;
+}
+.p-dropdown .p-inputtext {
+  font-weight: 400;
+  padding: 3px;
+}
+.p-dropdown .p-dropdown-label.p-placeholder {
+  color: black !important;
+}
+
+.p-tabmenu .p-tabmenu-nav {
+  background-color: lightgray !important;
+}
+
+.p-tabmenu-nav li a {
+  background-color: lightgray !important;
+  border: none !important;
+  color: black !important;
+  font-weight: bold !important;
+}
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
+  background-color: white !important;
+}
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link:focus {
+  box-shadow: none !important;
+}
+
+.p-checkbox .p-checkbox-box {
+  height: 18px !important;
+  width: 18px !important;
+  border-radius: 5px !important;
+}
+.p-checkbox .p-checkbox-box.p-highlight {
+  border-color: lightgray !important;
+  background-color: white !important;
+}
+.p-checkbox .p-checkbox-box .p-checkbox-icon {
+  color: rgb(53, 194, 53) !important;
+}
+.p-checkbox-icon {
+  font-size: 18px !important;
+  font-weight: bold !important;
+}
+.p-focus,
+.p-checkbox-focused {
+  box-shadow: none !important;
+}
+.p-button-icon.pi-times {
+  font-weight: bolder !important;
 }

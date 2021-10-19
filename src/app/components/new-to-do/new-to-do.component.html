@@ -1,9 +1,10 @@
-<div >
-    <form   ngSubmit="addItem(f)" class="container"  #f="ngForm">
-    <input type="text" pInputText required name="name" ngModel />
-    <p-dropdown [options]="categories" placeholder="UnCategorized" name="category" 
-    ngModel optionLabel="name"></p-dropdown>
-    
-    <button [disabled]="!f.valid" pButton type="submit" (click)="addItem(f)" label="Add" ></button>
-</form>
+<div>
+    <form ngSubmit="addItem(f)" class="container" #f="ngForm">
+        <input type="text" class="p-inputtext" required name="name" ngModel />
+        <p-dropdown id="category" [options]="categories" placeholder="UnCategorized" name="category" ngModel
+            optionLabel="name">
+        </p-dropdown>
+
+        <button id="addButton" [disabled]="!f.valid" pButton type="submit" (click)="addItem(f)" label="Add"></button>
+    </form>
 </div>
