@@ -5,21 +5,21 @@ body {
   justify-content: center;
 }
 .p-inputtext {
-  border-radius: 0 !important;
-  border-top-style: none !important;
+  border-radius: 0;
+  border-top-style: none;
   border-right-style: solid;
-  border-bottom-style: none !important;
-  border-left-style: none !important;
+  border-bottom-style: none;
+  border-left-style: none;
   font-weight: bold;
   width: 55%;
   height: 30px;
 }
 
-.p-inputtext:focus,
-.p-inputtext:hover {
+.p-inputtext:enabled:focus,
+.p-inputtext:enabled:hover {
   outline: none;
-  box-shadow: none !important;
-  border-color: #ced4da !important;
+  box-shadow: none;
+  border-color: #ced4da;
 }
 
 #addButton {
@@ -32,53 +32,56 @@ body {
 }
 
 .p-dropdown {
-  background-color: rgba(223, 217, 217, 0.705) !important;
+  background-color: rgba(223, 217, 217, 0.705);
 }
 .p-dropdown .p-inputtext {
   font-weight: 400;
   padding: 3px;
 }
 .p-dropdown .p-dropdown-label.p-placeholder {
-  color: black !important;
+  color: black;
 }
 
 .p-tabmenu .p-tabmenu-nav {
-  background-color: lightgray !important;
+  background-color: lightgray;
 }
 
-.p-tabmenu-nav li a {
-  background-color: lightgray !important;
-  border: none !important;
-  color: black !important;
-  font-weight: bold !important;
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+  background: lightgray;
+  border: none;
+  color: black;
+  font-weight: bold;
 }
+
 .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
-  background-color: white !important;
+  background-color: white;
+  border: none;
+  color: black;
 }
 .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link:focus {
-  box-shadow: none !important;
+  box-shadow: none;
 }
-
 .p-checkbox .p-checkbox-box {
-  height: 18px !important;
-  width: 18px !important;
-  border-radius: 5px !important;
+  height: 18px;
+  width: 18px;
+  border-radius: 5px;
 }
 .p-checkbox .p-checkbox-box.p-highlight {
-  border-color: lightgray !important;
-  background-color: white !important;
+  border-color: lightgray;
+  background: white;
 }
 .p-checkbox .p-checkbox-box .p-checkbox-icon {
-  color: rgb(53, 194, 53) !important;
+  color: rgb(53, 194, 53);
 }
 .p-checkbox-icon {
-  font-size: 18px !important;
-  font-weight: bold !important;
+  font-size: 18px;
+  font-weight: bold;
 }
 .p-focus,
 .p-checkbox-focused {
-  box-shadow: none !important;
+  box-shadow: none;
 }
 .p-button-icon.pi-times {
   font-weight: bolder !important;
+  text-shadow: 2px 0 red;
 }

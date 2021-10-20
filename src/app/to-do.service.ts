@@ -1,61 +1,63 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Item } from './item.model';
-import { BehaviorSubject, Subscription } from 'rxjs';
-
+import { BehaviorSubject, Subscription, Observable } from 'rxjs';
+import { tap, take } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
-export class ToDoService {
-  dataSubject = new BehaviorSubject<Item[]>([]);
-  dataSusbscrition: Subscription;
-  data: any;
-  constructor(private http: HttpClient) {}
+export class ToDoService implements OnInit {
+  private list = new BehaviorSubject<Item[]>([]);
 
-  getList() {
+  private data: Item[] = [];
+  constructor(private http: HttpClient) {
     if (JSON.parse(localStorage.getItem('todos'))) {
-      this.data = JSON.parse(localStorage.getItem('todos'));
-      this.dataSubject.next(this.data);
+      this.list.next(JSON.parse(localStorage.getItem('todos')));
     } else {
-      this.dataSusbscrition = this.http
+      this.http
         .get<Item[]>('https://60d8582ca376360017f45fe2.mockapi.io/todos')
-        .subscribe((data) => {
-          console.log(JSON.parse(localStorage.getItem('todos')));
-          this.data = data;
-          this.dataSubject.next(data);
-          localStorage.setItem('todos', JSON.stringify(data));
-        });
+        .pipe(
+          take(1),
+          tap((data) => {
+            this.list.next(data);
+            localStorage.setItem('todos', JSON.stringify(data));
+          })
+        )
+        .subscribe();
     }
   }
+  ngOnInit(): void {}
+
+  get list$() {
+    return this.list.asObservable();
+  }
   addItemToList(item: Item) {
-    this.data = [...this.data, item];
-    localStorage.setItem('todos', JSON.stringify(this.data));
-    this.dataSubject.next(this.data);
+    const newList = this.list.value;
+    newList.push(item);
+    this.list.next([...newList]);
+    localStorage.setItem('todos', JSON.stringify(newList));
   }
   removeItemFromList(item: Item) {
-    let index = this.data.findIndex(
-      (i) => i.creationDate === item.creationDate
-    );
-    this.data.splice(index, 1);
-    localStorage.setItem('todos', JSON.stringify(this.data));
-    this.dataSubject.next(this.data);
+    const pList = this.list.value;
+    let index = pList.findIndex((i) => i.creationDate === item.creationDate);
+    pList.splice(index, 1);
+    localStorage.setItem('todos', JSON.stringify(pList));
+    this.list.next(pList);
   }
-  changeCompletedTodos(item: Item) {
-    let index = this.data.findIndex(
-      (i) => i.creationDate === item.creationDate
-    );
-    let newData = this.data.slice();
-    newData[index].completed = item.completed;
-    localStorage.setItem('todos', JSON.stringify(newData));
-    this.dataSubject.next(newData);
+  changeCompletedTodos(item: Item, completed: boolean) {
+    const pList = this.list.value;
+    let index = pList.findIndex((i) => i.creationDate === item.creationDate);
+    pList[index].completed = completed;
+    localStorage.setItem('todos', JSON.stringify(pList));
+    this.list.next(pList);
   }
   editMade(item) {
-    let index = this.data.findIndex(
-      (i) => i.creationDate === item.creationDate
-    );
-    let newData = this.data.slice();
-    newData[index].title = item.title;
-    localStorage.setItem('todos', JSON.stringify(newData));
-    this.dataSubject.next(newData);
+    let newList = this.list.value.map((i) => {
+      if (i.creationDate === item.creationDate) return item;
+      return i;
+    });
+
+    localStorage.setItem('todos', JSON.stringify(newList));
+    this.list.next(newList);
   }
 }

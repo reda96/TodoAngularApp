@@ -1,5 +1,7 @@
 <div class="container">
-      <h2 >Ahmed's Todos ({{remaining}} is remaining) </h2>
+      <h2 *ngIf="listObs$ | async as data">
+            Ahmed's Todos ({{ data.length }} is remaining)
+      </h2>
       <app-new-to-do></app-new-to-do>
       <app-to-do-list></app-to-do-list>
 </div>

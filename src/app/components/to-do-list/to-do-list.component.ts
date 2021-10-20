@@ -9,13 +9,17 @@ import { map, tap, filter } from 'rxjs/operators';
   styleUrls: ['./to-do-list.component.css'],
 })
 export class ToDoListComponent implements OnInit {
-  list: Item[] = [];
+  listObs$ = this.tdSc.list$.pipe(
+    tap((data) => {
+      this.editing = Array.from({ length: data.length }, (i) => (i = false));
+    })
+  );
+
   value: boolean = true;
   completedFilter = false;
   categories: MenuItem[];
   editing: boolean[];
-  activeItem: MenuItem;
-  @ViewChild('p-tabMenu') menu: MenuItem[] = [];
+
   constructor(private tdSc: ToDoService) {
     this.categories = [
       { label: 'All' },
@@ -24,96 +28,28 @@ export class ToDoListComponent implements OnInit {
       { label: 'Groceries' },
       { label: 'Sport' },
     ];
-    this.activeItem = this.categories[0];
   }
 
-  ngOnInit(): void {
-    this.activeItem = this.categories[0];
+  ngOnInit(): void {}
 
-    this.tdSc.dataSubject
-      .pipe(
-        map((v) => this.filter(v)),
-        tap((data) => {
-          this.editing = Array.from(
-            { length: data.length },
-            (i) => (i = false)
-          );
-        })
-      )
-      .subscribe((data) => {
-        this.list = data;
-      });
+  markAsCompleted(data: Item[], index: number, completed: boolean) {
+    let selectedItem = data.find((d, i) => i === index);
+    this.tdSc.changeCompletedTodos(selectedItem, completed);
   }
 
-  markAsCompleted(completed: boolean, index: number) {
-    let selectedItem = null;
-    let newList = this.list.map((item, i) => {
-      if (i === index) {
-        item.completed = completed;
-
-        selectedItem = item;
-      }
-      return item;
-    });
-
-    this.tdSc.changeCompletedTodos(selectedItem);
-  }
-  filter(data: Item[]): Item[] {
-    let filteredList: Item[] = [];
-
-    if (this.completedFilter) {
-      if (this.activeItem.label !== 'All')
-        filteredList = data.filter(
-          (item) =>
-            !item.completed && item.category + '' === this.activeItem.label
-        );
-      else filteredList = data.filter((item) => !item.completed);
-    } else {
-      if (this.activeItem.label !== 'All') {
-        filteredList = data.filter(
-          (i) => i.category + '' === this.activeItem.label
-        );
-      } else {
-        filteredList = data;
-      }
-    }
-    return filteredList;
-  }
-
-  filterOnActive(menuItems) {
-    this.activeItem = menuItems['activeItem'];
-    this.tdSc.dataSubject.pipe(map((v) => this.filter(v))).subscribe((data) => {
-      this.list = data;
-    });
-  }
-  filterOnShowComplted() {
-    this.tdSc.dataSubject.pipe(map((v) => this.filter(v))).subscribe((data) => {
-      this.list = data;
-    });
-  }
   onRemoveItem(index: number, item) {
     this.tdSc.removeItemFromList(item);
   }
 
   makeItEditable(index: number) {
-    console.log(this.editing);
-
     this.editing = this.editing.map((e, i) => {
       if (i === index) return true;
       return false;
     });
   }
-  editTodo(e, index) {
-    let selectedItem = null;
-
-    let newList = this.list.map((item, i) => {
-      if (i === index) {
-        item.title = e.target.value;
-        selectedItem = item;
-      }
-      return item;
-    });
-    this.tdSc.editMade(selectedItem);
+  editTodo(e, item, index) {
+    item.title = e.target.value;
+    this.tdSc.editMade(item);
     this.editing.map((e, i) => i == index);
   }
 }

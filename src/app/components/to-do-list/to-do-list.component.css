@@ -5,10 +5,10 @@
 .todo {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  padding-left: 10px;
   padding-bottom: 5px;
   padding-top: 5px;
-  border-bottom: 1px solid lightgray;
+  /* border-bottom: 1px solid lightgray; */
 }
 .todo p {
   margin-left: 20px;
